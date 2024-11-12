@@ -10,8 +10,8 @@ import axios from "axios";
 import { baseUrl } from "../../_functions/getData";
 
 const socket = io(baseUrl, {
-  transports: ["websocket"],
-  withCredentials: true, // Include credentials if needed
+  transports: ["websocket", "polling"],
+  withCredentials: true,
 });
 
 const GameGroup = () => {
