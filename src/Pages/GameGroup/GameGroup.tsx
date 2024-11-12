@@ -9,7 +9,10 @@ import { io } from "socket.io-client";
 import axios from "axios";
 import { baseUrl } from "../../_functions/getData";
 
-const socket = io("http://localhost:4000");
+const socket = io(baseUrl, {
+  transports: ["websocket"],
+  withCredentials: true, // Include credentials if needed
+});
 
 const GameGroup = () => {
   const { Option } = Select;
