@@ -4,24 +4,32 @@ import { Answers } from "../../types/d";
 import { arabicAlphabet, inputStyle, questoins } from "./GameData";
 
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { io } from "socket.io-client";
+import { useRef, useState } from "react";
+
 import axios from "axios";
 import { baseUrl } from "../../_functions/getData";
+import useFetch from "../../_hooks/useFetch";
 
-const socket = io(baseUrl, {
-  transports: ["websocket", "polling"],
-  withCredentials: true,
-});
 
 const GameGroup = () => {
   const { Option } = Select;
   const [isSubmit, setIsSubmit] = useState(false);
   const character = useRef<string | undefined>()
   const [serverResponse, setServerResponse] = useState<Answers[]>([]);
+  
+    const searchParams = new URLSearchParams(window.location.search);
+    const grRef = searchParams.get("g");
 
-  const searchParams = new URLSearchParams(window.location.search);
-  const grRef = searchParams.get("g");
+  const { data } = useFetch(
+    `answers?${grRef}`,
+    "answers-by-group",
+    true,
+    "",
+    10000
+  );
+
+  console.log(data);
+  
 
   const [messageApi, contextHolder] = message.useMessage();
   const notify = (
@@ -37,31 +45,6 @@ const GameGroup = () => {
       },
     });
   };
-
-  useEffect(() => {
-    socket.emit("getanswers", grRef);
-
-    // Listen for the 'getanswers' response from the server
-    socket.on("getanswers", (allAns) => {
-      console.log(allAns);
-      // You can also update the state with the answers if needed
-      setServerResponse(allAns);
-    });
-  
-    // Listen for 'answerSaved' event from the server
-    socket.on("answerSaved", () => {
-      notify("success", `تمت الاجابة من احد اللاعبين `);
-      // setServerResponse((p) => msg);
-    socket.emit("getanswers", grRef);
-
-    });
-  
-    // Cleanup event listeners on component unmount
-    return () => {
-      socket.off("getanswers");
-      socket.off("answerSaved");
-    };
-  }, [socket]);
 
 
   const handleCopy = async (txtlink: string) => {
@@ -153,7 +136,7 @@ const GameGroup = () => {
             </div>
           ))}
         </div>
-        <Typography.Title level={5}>ايه او خمس كلمات من الايه لا تفسد معني الايه</Typography.Title>
+        <Typography.Title level={5}>ايه او جزء من الايه ولكن لا يفسد المعني</Typography.Title>
         <textarea
         className={`${inputStyle}`}
           {...register(`ayah` as keyof Answers, { required: true })}

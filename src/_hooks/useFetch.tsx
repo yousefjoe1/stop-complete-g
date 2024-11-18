@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getData, getDataWithAuth } from '../_functions/getData';
 
-const useFetch = (url:string, apiName:string, fetchAgain:any,auth = '') => {
+const useFetch = (url:string, apiName:string, fetchAgain:any,auth = '', polling?: number | false) => {
 // * url , apiName , fetchAgain , isPaginate , isAuth , isEnable
     let { data, isLoading, isRefetching, isError,refetch ,error,isFetched} = useQuery({
         queryKey: [apiName, fetchAgain],
@@ -15,6 +15,7 @@ const useFetch = (url:string, apiName:string, fetchAgain:any,auth = '') => {
         },
         refetchOnWindowFocus: false,
         // enabled: isEnable
+        refetchInterval: polling
     });
     return {data, isLoading, isRefetching, isError,refetch, error , isFetched}
 }
