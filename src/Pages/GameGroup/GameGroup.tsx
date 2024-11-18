@@ -15,7 +15,6 @@ const GameGroup = () => {
   const { Option } = Select;
   const [isSubmit, setIsSubmit] = useState(false);
   const character = useRef<string | undefined>()
-  const [serverResponse, setServerResponse] = useState<Answers[]>([]);
   
     const searchParams = new URLSearchParams(window.location.search);
     const grRef = searchParams.get("g");
