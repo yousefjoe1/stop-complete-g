@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 
 const withSuspense = (Component: any) => {
   return (
-    <Suspense fallback={`<MySpinner />`}>
+    <Suspense fallback={<div className='loader' />}>
       <Component />
     </Suspense>
   )
