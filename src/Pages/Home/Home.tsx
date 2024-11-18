@@ -129,9 +129,10 @@ const Home = () => {
               children: (
                 <>
                   <ul className="px-3">
-                    <li>انشاء مجموعة</li>
+                    <li>سجل الاول</li>
+                    <li>اعمل مجموعة</li>
                     <li>ادخل المجموعة وانسخ العنوان الموجود</li>
-                    <li>ارسلة لاصدقائك</li>
+                    <li>ابعته لاصحابك</li>
                   </ul>
                 </>
               ),
@@ -139,7 +140,7 @@ const Home = () => {
           ]}
         />
 
-        <h3 className="lg:pt-10 pb-3 lg:text-lg font-bold">مجموعاتك</h3>
+        <h3 className="lg:pt-10 pt-4 pb-3 lg:text-lg font-bold">مجموعاتك</h3>
         {isLoading ? (
           <div className="loader-get"></div>
         ) : (

@@ -20,12 +20,12 @@ const GameGroup = () => {
     const searchParams = new URLSearchParams(window.location.search);
     const grRef = searchParams.get("g");
 
-  const { data } = useFetch(
-    `answers?${grRef}`,
-    "answers-by-group",
+  const { data ,refetch} = useFetch(
+    `answers/${grRef}`,
+    `answers-by-group-${grRef}`,
     true,
     "",
-    10000
+    100000
   );
 
   console.log(data);
@@ -78,6 +78,7 @@ const GameGroup = () => {
     let url = `${baseUrl}/api/answers`;
     setIsSubmit(true);
     let resp = await axios.post(url, d, h);
+    refetch()
     notify("success", `${resp.data.msg} -- تمت الاجابة `);
     setIsSubmit(false);
   };
@@ -179,7 +180,7 @@ const GameGroup = () => {
           </tr>
         </thead>
         <tbody>
-          {serverResponse?.map((item, index) => (
+          {data?.data?.map((item:any, index:number) => (
             <tr
               key={index}
               className={`text-gray-700 ${index % 2 === 0 ? "bg-gray-50" : ""}`}
