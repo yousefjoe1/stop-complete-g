@@ -76,7 +76,7 @@ const Home = () => {
         dir="rtl"
         className="min-h-screen pt-20 container mx-auto lg:px-0 px-5 pb-10"
       >
-        <h1 className="lg:text-3xl font-bold my-10 text-center">مرحبا بك</h1>
+        <h1 className="lg:text-3xl font-bold my-10 text-center">مرحبا بك 👋</h1>
 
         {/* اضافة جروب للعب */}
         {/* <section className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"> */}
