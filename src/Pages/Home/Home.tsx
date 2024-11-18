@@ -50,6 +50,14 @@ const Home = () => {
         Authorization: `Bearer ${localStorage.getItem("playerToken")}`,
       },
     };
+    console.log("🚀 ~ constonSubmit:SubmitHandler<GroupInputs>= ~ h:",localStorage.getItem("playerToken"))
+
+    if(!localStorage.getItem("playerToken")) {
+      msg("error", `  انت لست مسجل عندنا سجل والعب`);
+    return
+    }
+
+
     let url = `${baseUrl}/api/groups`;
     let userdata = {
       name: data.name,
@@ -57,6 +65,8 @@ const Home = () => {
     setIsSubmit(true);
 
     let resp = await axios.post(url, userdata, h);
+    console.log(resp);
+    
     if (resp.data.code == 400) {
       msg("error", `${resp.data.msg} -- انت لست مسجل عندنا`);
     }
@@ -64,7 +74,6 @@ const Home = () => {
       msg("success", `${resp.data.msg} -- تم الاضافة `);
       refetch();
     }
-
     setIsSubmit(false);
   };
 
@@ -74,7 +83,7 @@ const Home = () => {
 
       <div
         dir="rtl"
-        className="min-h-screen pt-20 container mx-auto lg:px-0 px-5 pb-10"
+        className="min-h-screen lg:pt-10 pt-2 container mx-auto lg:px-0 px-5 pb-10"
       >
         <h1 className="lg:text-3xl font-bold my-10 text-center">مرحبا بك 👋</h1>
 
@@ -89,14 +98,14 @@ const Home = () => {
           <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div>
               <label htmlFor="group-name" className="sr-only">
-                اسم جروب اللعب
+                اسم مجموعه اللعب
               </label>
               <input
                 id="group-name"
                 {...register("name", { required: true })}
                 type="text"
                 className="appearance-none rounded-md relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm transition duration-300 ease-in-out"
-                placeholder="اسم جروب اللعب"
+                placeholder="اسم مجموعه اللعب"
               />
               {errors.name && (
                 <p className="text-red-500 text-xs mt-1">هذا الحقل مطلوب</p>
