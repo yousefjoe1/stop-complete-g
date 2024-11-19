@@ -32,7 +32,7 @@ const ProfileMenu = () => {
     ? [
         ...logedItems,
         {
-          label: <button>logout</button>,
+          label: <button type="button" title="logout">logout</button>,
           key: "3",
           onClick: () => {
             handleLogout();
@@ -48,7 +48,7 @@ const ProfileMenu = () => {
   return (
     <>
       <Dropdown menu={menuProps} trigger={["click"]}>
-        <button className="flex items-center justify-center lg:w-8 lg:h-8 h-10 w-10 rounded-full bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-indigo-100 transition duration-150 ease-in-out">
+        <button type="button" className="flex items-center justify-center lg:w-8 lg:h-8 h-10 w-10 rounded-full bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-indigo-100 transition duration-150 ease-in-out">
           {isLoggedIn ? (
             <User className="lg:h-6 lg:w-6 w-6 h-6 text-gray-600" />
           ) : (

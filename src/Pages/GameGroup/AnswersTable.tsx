@@ -20,7 +20,10 @@ const AnswersTable = ({data}:{data: any}) => {
           </th>
         ))}
         <th className="py-3 px-6 text-center border-b border-gray-300">
+          <div className='w-[200px]'>
           ايه من القرءان
+
+          </div>
         </th>
       </tr>
     </thead>
