@@ -9,6 +9,7 @@ import { useState } from "react";
 import { Collapse, message } from "antd";
 import { Group } from "../../types/d";
 import { Link } from "react-router-dom";
+import MyName from "../../_components/Animations/MyName";
 
 interface GroupInputs {
   name: string;
@@ -87,6 +88,8 @@ const Home = () => {
       >
         <h1 className="lg:text-3xl font-bold my-10 text-center">مرحبا بك 👋</h1>
 
+        <MyName />
+
         {/* اضافة جروب للعب */}
         {/* <section className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"> */}
         <motion.div
@@ -137,7 +140,7 @@ const Home = () => {
               label:<p className="font-bold text-xl"> ازاي نلعب</p>,
               children: (
                 <>
-                  <ul className="px-3">
+                  <ul className="px-3 text-xl">
                     <li>سجل الاول</li>
                     <li>اعمل مجموعة</li>
                     <li>ادخل المجموعة وانسخ العنوان الموجود</li>

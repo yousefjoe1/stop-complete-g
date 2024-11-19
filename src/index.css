@@ -158,3 +158,25 @@
 }
 @keyframes l3-0 {to{rotate: -1turn}}
 @keyframes l3-1 {to{transform: rotate(1turn) translate(15.625%) rotate(-1.333turn)}}
+
+
+.my-name svg path {
+  fill: transparent;
+  stroke: black;
+  stroke-width: 0.1;
+  stroke-dasharray: 190;
+  stroke-dashoffset: 190 ;
+  animation: myname 4s ease-in-out 1 forwards;
+}
+
+@keyframes myname {
+  0% {
+  stroke-dashoffset: 190 ;
+    
+  }
+
+  100% {
+  stroke-dashoffset:0 ;
+    fill: black;
+  }
+}
