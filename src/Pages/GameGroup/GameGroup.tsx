@@ -9,17 +9,17 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../_functions/getData";
 import useFetch from "../../_hooks/useFetch";
-
+import AnswersTable from "./AnswersTable";
 
 const GameGroup = () => {
   const { Option } = Select;
   const [isSubmit, setIsSubmit] = useState(false);
-  const character = useRef<string | undefined>()
-  
-    const searchParams = new URLSearchParams(window.location.search);
-    const grRef = searchParams.get("g");
+  const character = useRef<string | undefined>();
 
-  const { data ,refetch} = useFetch(
+  const searchParams = new URLSearchParams(window.location.search);
+  const grRef = searchParams.get("g");
+
+  const { data, refetch } = useFetch(
     `answers/${grRef}`,
     `answers-by-group-${grRef}`,
     true,
@@ -28,7 +28,6 @@ const GameGroup = () => {
   );
 
   console.log(data);
-  
 
   const [messageApi, contextHolder] = message.useMessage();
   const notify = (
@@ -45,12 +44,11 @@ const GameGroup = () => {
     });
   };
 
-
   const handleCopy = async (txtlink: string) => {
     try {
       await navigator.clipboard.writeText(txtlink);
       // msgFunc("تم نسخ اللينك");
-      notify("success", `تم نسخ اللينك`)
+      notify("success", `تم نسخ اللينك`);
     } catch (error) {
       console.error("Error copying text:", error);
     }
@@ -58,16 +56,16 @@ const GameGroup = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<Answers>();
 
   const onSubmit: SubmitHandler<Answers> = async (data) => {
-
-    if(character.current == undefined){
+    if (character.current == undefined) {
       notify("error", `اختر حرف اولا`);
-      return
+      return;
     }
-    const d = { ...data, group: grRef };
+    const d = { ...data, group: grRef, character: character.current };
     let h = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("playerToken")}`,
@@ -77,13 +75,15 @@ const GameGroup = () => {
     let url = `${baseUrl}/api/answers`;
     setIsSubmit(true);
     let resp = await axios.post(url, d, h);
-    refetch()
+    refetch();
     notify("success", `${resp.data.msg} -- تمت الاجابة `);
+    character.current = ''
     setIsSubmit(false);
+    reset()
   };
 
-  const onGenderChange = (value:string | undefined) => {
-    character.current = value
+  const onGenderChange = (value: string | undefined) => {
+    character.current = value;
   };
 
   return (
@@ -101,7 +101,7 @@ const GameGroup = () => {
           الحروف
         </Typography.Title>
         <Select
-        className="w-[100px] "
+          className="w-[120px] "
           size="large"
           placeholder="اختر الحرف"
           onChange={onGenderChange}
@@ -136,9 +136,11 @@ const GameGroup = () => {
             </div>
           ))}
         </div>
-        <Typography.Title level={5}>ايه او جزء من الايه ولكن لا يفسد المعني</Typography.Title>
+        <Typography.Title level={5}>
+          ايه او جزء من الايه ولكن لا يفسد المعني
+        </Typography.Title>
         <textarea
-        className={`${inputStyle}`}
+          className={`${inputStyle}`}
           {...register(`ayah` as keyof Answers, { required: true })}
           placeholder="الايه"
         />
@@ -158,59 +160,8 @@ const GameGroup = () => {
         </motion.button>
       </form>
       <div className="overflow-x-auto">
-
-      <table className="min-w-[99%] mt-10 bg-white border border-gray-300 shadow-md rounded-lg">
-        <thead>
-          <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-            <th className="py-3 px-6 text-center border-b border-gray-300">
-              اسم اللاعب
-            </th>
-            {questoins.map((item) => (
-              <th
-                key={item.id}
-                className="py-3 px-6 text-center border-b border-gray-300"
-              >
-                {item.label}
-              </th>
-            ))}
-            <th className="py-3 px-6 text-center border-b border-gray-300">
-              ايه
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.data?.map((item:any, index:number) => (
-            <tr
-              key={index}
-              className={`text-gray-700 ${index % 2 === 0 ? "bg-gray-50" : ""}`}
-            >
-              <td className="py-3 px-6 text-center border-b border-gray-300">
-                {item.playerName}
-              </td>
-              <td className="py-3 px-6 text-center border-b border-gray-300">
-                {item.prophet}
-              </td>
-              <td className="py-3 px-6 text-center border-b border-gray-300">
-                {item.companionMale}
-              </td>
-              <td className="py-3 px-6 text-center border-b border-gray-300">
-                {item.companionFemale}
-              </td>
-              <td className="py-3 px-6 text-center border-b border-gray-300">
-                {item.surah}
-              </td>
-              <td className="py-3 px-6 text-center border-b border-gray-300">
-                {item.ghazwa}
-              </td>
-              <td className="py-3 px-6 text-center border-b border-gray-300">
-                {item.ayah}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        <AnswersTable data={data} />
       </div>
-
     </>
   );
 };

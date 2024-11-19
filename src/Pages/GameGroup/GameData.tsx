@@ -1,4 +1,5 @@
 export const questoins  = [
+    // { id: "character", label: "الحرف" },
     { id: "prophet", label: "اسم نبي" },
     { id: "companionMale", label: "اسم صحابي" },
     { id: "companionFemale", label: "اسم صحابية" },
