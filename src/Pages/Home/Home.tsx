@@ -31,7 +31,7 @@ const Home = () => {
     });
   };
 
-  const { data, refetch, isLoading } = useFetch(
+  const { data, refetch, isLoading,isRefetching } = useFetch(
     "groups",
     "all-player-group",
     true,
@@ -51,13 +51,11 @@ const Home = () => {
         Authorization: `Bearer ${localStorage.getItem("playerToken")}`,
       },
     };
-    console.log("🚀 ~ constonSubmit:SubmitHandler<GroupInputs>= ~ h:",localStorage.getItem("playerToken"))
 
-    if(!localStorage.getItem("playerToken")) {
+    if (!localStorage.getItem("playerToken")) {
       msg("error", `  انت لست مسجل عندنا سجل والعب`);
-    return
+      return;
     }
-
 
     let url = `${baseUrl}/api/groups`;
     let userdata = {
@@ -66,8 +64,7 @@ const Home = () => {
     setIsSubmit(true);
 
     let resp = await axios.post(url, userdata, h);
-    console.log(resp);
-    
+
     if (resp.data.code == 400) {
       msg("error", `${resp.data.msg} -- انت لست مسجل عندنا`);
     }
@@ -90,8 +87,6 @@ const Home = () => {
 
         <MyName />
 
-        {/* اضافة جروب للعب */}
-        {/* <section className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8"> */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -127,9 +122,6 @@ const Home = () => {
             </div>
           </form>
         </motion.div>
-        {/* </section> */}
-
-        {/* كيف نلعب */}
 
         <Collapse
           className="mt-10 w-fit"
@@ -137,16 +129,20 @@ const Home = () => {
           items={[
             {
               key: "1",
-              label:<p className="font-bold text-xl"> ازاي نلعب</p>,
+              label: <p className="font-bold text-xl"> ازاي نلعب</p>,
               children: (
                 <>
                   <ul className="px-3 text-xl">
                     <li>سجل الاول</li>
                     <li>اعمل مجموعة</li>
                     <li>ادخل المجموعة وانسخ العنوان الموجود</li>
-                    <li>ابعته لاصحابك عن طريق الواتس او اي حاجه بتتكلموا عليها</li>
+                    <li>
+                      ابعته لاصحابك عن طريق الواتس او اي حاجه بتتكلموا عليها
+                    </li>
                     <li>☝️ أو ممكن</li>
-                    <li className="font-bold">بعد ما تسجل اي حد يبعتلك لينك المجموعه اللي هو عاملها</li>
+                    <li className="font-bold">
+                      بعد ما تسجل اي حد يبعتلك لينك المجموعه اللي هو عاملها
+                    </li>
                   </ul>
                 </>
               ),
@@ -155,7 +151,7 @@ const Home = () => {
         />
 
         <h3 className="lg:pt-10 pt-4 pb-3 lg:text-lg font-bold">مجموعاتك</h3>
-        {isLoading ? (
+        {isLoading || isRefetching ? (
           <div className="loader-get"></div>
         ) : (
           <div className="grid lg:grid-cols-2 gap-8">

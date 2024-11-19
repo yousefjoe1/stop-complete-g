@@ -166,7 +166,7 @@
   stroke-width: 0.1;
   stroke-dasharray: 190;
   stroke-dashoffset: 190 ;
-  animation: myname 4s ease-in-out 1 forwards;
+  animation: myname 5s ease-in-out 1 forwards;
 }
 
 @keyframes myname {

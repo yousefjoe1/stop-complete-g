@@ -19,7 +19,7 @@ const GameGroup = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const grRef = searchParams.get("g");
 
-  const { data, refetch } = useFetch(
+  const { data, refetch, isLoading, isRefetching } = useFetch(
     `answers/${grRef}`,
     `answers-by-group-${grRef}`,
     true,
@@ -61,7 +61,7 @@ const GameGroup = () => {
   } = useForm<Answers>();
 
   const onSubmit: SubmitHandler<Answers> = async (data) => {
-    if (character.current == undefined) {
+    if (character.current == undefined || character.current == '') {
       notify("error", `اختر حرف اولا`);
       return;
     }
@@ -77,9 +77,9 @@ const GameGroup = () => {
     let resp = await axios.post(url, d, h);
     refetch();
     notify("success", `${resp.data.msg} -- تمت الاجابة `);
-    character.current = ''
+    character.current = "";
     setIsSubmit(false);
-    reset()
+    reset();
   };
 
   const onGenderChange = (value: string | undefined) => {
@@ -159,9 +159,15 @@ const GameGroup = () => {
           {isSubmit ? <div className="loader"></div> : <span>خلصت</span>}
         </motion.button>
       </form>
-      <div className="overflow-x-auto">
-        <AnswersTable data={data} />
-      </div>
+      {isLoading || isRefetching ? (
+        <div className="w-11/12 mx-auto mt-10 ">
+          <div className="loader-get" />
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <AnswersTable data={data} />
+        </div>
+      )}
     </>
   );
 };
