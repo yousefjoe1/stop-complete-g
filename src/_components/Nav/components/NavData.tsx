@@ -21,7 +21,7 @@ export const logedItems = [
           to="/all-info"
           className="block px-4 py-2 text-sm text-gray-700 hover:text-indigo-600"
         >
-          المعلومات
+          نراجع مع بعض
         </Link>
       ),
       key: "1",

@@ -7,6 +7,7 @@ import GameGroup from "../Pages/GameGroup/GameGroup";
 
 const Home = lazy(() => import("../Pages/Home/Home"));
 const Auth = lazy(() => import("../Pages/Home/Auth/Auth"));
+const AllInfo = lazy(() => import("../Pages/AllInfo/AllInfo"));
 
 export const homeRoutes = [
       {
@@ -20,6 +21,10 @@ export const homeRoutes = [
       {
         path: '/group',
         element: withSuspense(GameGroup),
+      },
+      {
+        path: '/all-info',
+        element: withSuspense(AllInfo),
       },
 
     ]
