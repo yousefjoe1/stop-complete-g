@@ -7,6 +7,7 @@ export type Inputs = {
 
 export interface Group {
   name: string;
+  groupType: string;
   adminPlayer: string;
   _id: string;
 }
