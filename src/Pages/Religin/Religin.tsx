@@ -11,6 +11,7 @@ import useFetch from "../../_hooks/useFetch";
 import { arabicAlphabet, inputStyle, religinQuestoins, } from "../GameGroup/GameData";
 import AnswersTable from "../GameGroup/AnswersTable";
 
+
 const Religin = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const { Option } = Select;
@@ -160,6 +161,12 @@ const Religin = () => {
           {isSubmit ? <div className="loader"></div> : <span>خلصت</span>}
         </motion.button>
       </form>
+      {/* // todo: later */}
+      <button  className="button-82-pushable mt-4" role="button">
+          <span className="button-82-shadow"></span>
+          <span className="button-82-edge"></span>
+          <span className="button-82-front text">تنزيل الاجابة فى ملف pdf</span>
+        </button>
       {isLoading || isRefetching ? (
         <div className="w-11/12 mx-auto mt-10 ">
           <div className="loader-get" />
