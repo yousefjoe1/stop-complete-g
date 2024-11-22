@@ -1,7 +1,6 @@
 import { Button, Select, Typography, message } from "antd";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Answers } from "../../types/d";
-import { arabicAlphabet, inputStyle, religinQuestoins } from "./GameData";
 
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
@@ -9,9 +8,11 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../_functions/getData";
 import useFetch from "../../_hooks/useFetch";
-import AnswersTable from "./AnswersTable";
+import { arabicAlphabet, generalQuestions, inputStyle } from "../GameGroup/GameData";
+import GeneralAnswers from "./components/GeneralAnswers";
 
-const GameGroup = () => {
+const General = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const { Option } = Select;
   const [isSubmit, setIsSubmit] = useState(false);
   const character = useRef<string | undefined>();
@@ -20,16 +21,15 @@ const GameGroup = () => {
   const grRef = searchParams.get("g");
 
   const { data, refetch, isLoading, isRefetching } = useFetch(
-    `answers/${grRef}`,
-    `answers-by-group-${grRef}`,
+    `answers/${grRef}?type=general`,
+    `answers-by-group-${grRef}-general`,
     true,
     "",
     100000
   );
 
-  console.log(data);
+  console.log("🚀 ~ Religin ~ data:", data);
 
-  const [messageApi, contextHolder] = message.useMessage();
   const notify = (
     type: "error" | "success" | "info" | "warning" | "loading" = "success",
     txt: string
@@ -47,7 +47,6 @@ const GameGroup = () => {
   const handleCopy = async (txtlink: string) => {
     try {
       await navigator.clipboard.writeText(txtlink);
-      // msgFunc("تم نسخ اللينك");
       notify("success", `تم نسخ اللينك`);
     } catch (error) {
       console.error("Error copying text:", error);
@@ -61,11 +60,12 @@ const GameGroup = () => {
   } = useForm<Answers>();
 
   const onSubmit: SubmitHandler<Answers> = async (data) => {
-    if (character.current == undefined || character.current == '') {
+    if (character.current == undefined || character.current == "") {
       notify("error", `اختر حرف اولا`);
       return;
     }
-    const d = { ...data, group: grRef, character: character.current };
+    let answers = {...data,character: character.current };
+    const d = { general: answers, group: grRef, };
     let h = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("playerToken")}`,
@@ -85,9 +85,9 @@ const GameGroup = () => {
   const onGenderChange = (value: string | undefined) => {
     character.current = value;
   };
-
   return (
-    <>
+    <div>
+          <>
       {contextHolder}
 
       <Button
@@ -114,7 +114,7 @@ const GameGroup = () => {
           ))}
         </Select>
         <div className="grid gap-4 lg:grid-cols-3 grid-cols-2">
-          {religinQuestoins.map(({ id, label }) => (
+          {generalQuestions.map(({ id, label }) => (
             <div key={id}>
               <label htmlFor={id} className="sr-only">
                 {label}
@@ -136,19 +136,6 @@ const GameGroup = () => {
             </div>
           ))}
         </div>
-        <Typography.Title level={5}>
-          ايه او جزء من الايه ولكن لا يفسد المعني
-        </Typography.Title>
-        <textarea
-          className={`${inputStyle}`}
-          {...register(`ayah` as keyof Answers, { required: true })}
-          placeholder="الايه"
-        />
-        {errors[`ayah` as keyof Answers] && (
-          <p className="text-red-500 text-sm mt-1">
-            اكتب الاجابة او اي حاجة زي لا
-          </p>
-        )}
         <motion.button
           type="submit"
           disabled={isSubmit}
@@ -165,11 +152,12 @@ const GameGroup = () => {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <AnswersTable data={data} />
+          <GeneralAnswers data={data} />
         </div>
       )}
     </>
-  );
-};
+    </div>
+  )
+}
 
-export default GameGroup;
+export default General

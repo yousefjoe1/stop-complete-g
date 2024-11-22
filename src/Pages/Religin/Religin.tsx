@@ -1,7 +1,6 @@
 import { Button, Select, Typography, message } from "antd";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Answers } from "../../types/d";
-import { arabicAlphabet, inputStyle, religinQuestoins } from "./GameData";
 
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
@@ -9,9 +8,11 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../_functions/getData";
 import useFetch from "../../_hooks/useFetch";
-import AnswersTable from "./AnswersTable";
+import { arabicAlphabet, inputStyle, religinQuestoins, } from "../GameGroup/GameData";
+import AnswersTable from "../GameGroup/AnswersTable";
 
-const GameGroup = () => {
+const Religin = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const { Option } = Select;
   const [isSubmit, setIsSubmit] = useState(false);
   const character = useRef<string | undefined>();
@@ -20,16 +21,15 @@ const GameGroup = () => {
   const grRef = searchParams.get("g");
 
   const { data, refetch, isLoading, isRefetching } = useFetch(
-    `answers/${grRef}`,
-    `answers-by-group-${grRef}`,
+    `answers/${grRef}?type=religin`,
+    `answers-by-group-${grRef}-religin`,
     true,
     "",
     100000
   );
 
-  console.log(data);
+  console.log("🚀 ~ Religin ~ data:", data);
 
-  const [messageApi, contextHolder] = message.useMessage();
   const notify = (
     type: "error" | "success" | "info" | "warning" | "loading" = "success",
     txt: string
@@ -47,7 +47,6 @@ const GameGroup = () => {
   const handleCopy = async (txtlink: string) => {
     try {
       await navigator.clipboard.writeText(txtlink);
-      // msgFunc("تم نسخ اللينك");
       notify("success", `تم نسخ اللينك`);
     } catch (error) {
       console.error("Error copying text:", error);
@@ -61,11 +60,13 @@ const GameGroup = () => {
   } = useForm<Answers>();
 
   const onSubmit: SubmitHandler<Answers> = async (data) => {
-    if (character.current == undefined || character.current == '') {
+    if (character.current == undefined || character.current == "") {
       notify("error", `اختر حرف اولا`);
       return;
     }
-    const d = { ...data, group: grRef, character: character.current };
+    let answers = {...data,character: character.current };
+
+    const d = { religin: answers, group: grRef };
     let h = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("playerToken")}`,
@@ -172,4 +173,4 @@ const GameGroup = () => {
   );
 };
 
-export default GameGroup;
+export default Religin;
