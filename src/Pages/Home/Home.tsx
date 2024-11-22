@@ -6,10 +6,11 @@ import { motion } from "framer-motion";
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRef, useState } from "react";
-import {Collapse, message } from "antd";
+import { Collapse, message } from "antd";
 import { Group } from "../../types/d";
 import MyName from "../../_components/Animations/MyName";
 import GroupCard from "../../_components/Cards/GroupCard";
+import { Link } from "react-router-dom";
 
 interface GroupInputs {
   name: string;
@@ -46,9 +47,8 @@ const Home = () => {
     formState: { errors },
   } = useForm<GroupInputs>();
 
-  const groupType = useRef<string | undefined>('')
-  console.log("🚀 ~ Home ~ groupType:", groupType)
-  
+  const groupType = useRef<string | undefined>("");
+  console.log("🚀 ~ Home ~ groupType:", groupType);
 
   const onSubmit: SubmitHandler<GroupInputs> = async (data) => {
     let h = {
@@ -62,24 +62,21 @@ const Home = () => {
       return;
     }
 
-    
-    if (groupType.current == '') {
+    if (groupType.current == "") {
       msg("error", `اختر نوع اولا`);
       return;
     }
 
-
-
     let url = `${baseUrl}/api/groups`;
     let userdata = {
       name: data.name,
-      groupType: groupType.current
+      groupType: groupType.current,
     };
     setIsSubmit(true);
 
     let resp = await axios.post(url, userdata, h);
 
-    if (resp.data.code == 400 || resp.data.code != 201 ) {
+    if (resp.data.code == 400 || resp.data.code != 201) {
       msg("error", `${resp.data.msg} او هناك خطا اخر -- انت لست مسجل عندنا`);
     }
     if (resp.data.code == 201) {
@@ -87,9 +84,8 @@ const Home = () => {
       refetch();
     }
     setIsSubmit(false);
-    groupType.current = '';
+    groupType.current = "";
   };
-
 
   return (
     <>
@@ -99,9 +95,44 @@ const Home = () => {
         dir="rtl"
         className="min-h-screen lg:pt-10 pt-2 container mx-auto lg:px-0 px-5 pb-10"
       >
-        <h1 className="lg:text-3xl font-bold my-10 text-center">مرحبا بك 👋</h1>
+        <h1 className="lg:text-3xl font-bold lg:my-10 my-4 text-center">مرحبا بك 👋</h1>
 
         <MyName />
+
+        <Link to={`/all-info`} className="buttons">
+          <button className="blob-btn">
+            الصحابة
+            👆 
+            <span className="blob-btn__inner">
+              <span className="blob-btn__blobs">
+                <span className="blob-btn__blob"></span>
+                <span className="blob-btn__blob"></span>
+                <span className="blob-btn__blob"></span>
+                <span className="blob-btn__blob"></span>
+              </span>
+            </span>
+          </button>
+          <br />
+
+        </Link>
+          <svg className="h-0" xmlns="http://www.w3.org/2000/svg" version="1.1">
+            <defs>
+              <filter id="goo">
+                <feGaussianBlur
+                  in="SourceGraphic"
+                  result="blur"
+                  stdDeviation="10"
+                ></feGaussianBlur>
+                <feColorMatrix
+                  in="blur"
+                  mode="matrix"
+                  values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 21 -7"
+                  result="goo"
+                ></feColorMatrix>
+                <feBlend in2="goo" in="SourceGraphic" result="mix"></feBlend>
+              </filter>
+            </defs>
+          </svg>
 
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -128,7 +159,7 @@ const Home = () => {
             <div className="type-select">
               <h4>اختر النوع</h4>
               <div className="select mt-2">
-                <select onChange={(e)=> groupType.current = e.target.value}>
+                <select onChange={(e) => (groupType.current = e.target.value)}>
                   <option value=""></option>
                   <option value="دينية">دينية</option>
                   <option value="عامة">ثقافة عامة</option>
@@ -183,7 +214,7 @@ const Home = () => {
         ) : (
           <div className="grid lg:grid-cols-2 gap-8">
             {data?.data?.map((group: Group) => (
-                <GroupCard key={group._id} group={group}  />
+              <GroupCard key={group._id} group={group} />
             ))}
           </div>
         )}
