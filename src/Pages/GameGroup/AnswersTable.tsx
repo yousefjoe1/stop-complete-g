@@ -1,4 +1,4 @@
-import { generalQuestions } from "./GameData";
+import { religinQuestoins } from "./GameData";
 
 interface ReligIn {
   playerName: string; // Player's name
@@ -11,19 +11,9 @@ interface ReligIn {
   ayah: string; // Ayah content
 }
 
-interface General {
-  // Add general properties here as needed
-  character: string;
-  boy: string;
-  girl: string;
-  solid: string;
-  animal: string;
-  country: string;
-}
 
 interface Item {
   religin: ReligIn; // Object holding religious properties
-  general: General; // Object for general properties
 }
 const AnswersTable = ({ data }: { data: any }) => {
   return (
@@ -36,7 +26,7 @@ const AnswersTable = ({ data }: { data: any }) => {
           <th className="py-3 px-6 text-center border-b border-gray-300">
             الحرف
           </th>
-          {generalQuestions.map((item) => (
+          {religinQuestoins.map((item) => (
             <th
               key={item.id}
               className="py-3 px-6 text-center border-b border-gray-300"

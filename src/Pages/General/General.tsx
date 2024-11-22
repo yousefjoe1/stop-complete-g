@@ -64,8 +64,8 @@ const General = () => {
       notify("error", `اختر حرف اولا`);
       return;
     }
-    let answers = data;
-    const d = { general: answers, group: grRef, character: character.current };
+    let answers = {...data,character: character.current };
+    const d = { general: answers, group: grRef, };
     let h = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("playerToken")}`,

@@ -1,23 +1,23 @@
-import { generalQuestions } from '../../GameGroup/GameData';
+import { generalQuestions } from "../../GameGroup/GameData";
 
 interface General {
-    // Add general properties here as needed
-  playerName: string; // Player's name
-    character: string;
-    boy: string;
-    girl: string;
-    solid: string;
-    animal: string;
-    planet: string;
-    country: string;
-  }
+  // Add general properties here as needed
+  character: string;
+  boy: string;
+  girl: string;
+  solid: string;
+  animal: string;
+  planet: string;
+  country: string;
+}
 
-  
 interface Item {
-    general: General; // Object for general properties
-  }
+  general: General; // Object for general properties
+  playerName: string; // Player's name
 
-const GeneralAnswers =  ({ data }: { data: any }) => {
+}
+
+const GeneralAnswers = ({ data }: { data: any }) => {
   return (
     <table className="min-w-[99%] mt-10 bg-white border border-gray-300 shadow-md rounded-lg">
       <thead>
@@ -45,7 +45,7 @@ const GeneralAnswers =  ({ data }: { data: any }) => {
             className={`text-gray-700 ${index % 2 === 0 ? "bg-gray-50" : ""}`}
           >
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.general.playerName}
+              {item.playerName}
             </td>
             <td className="py-3 w-[200px] px-6 text-center border-b border-gray-300">
               {item.general.character}
@@ -72,7 +72,7 @@ const GeneralAnswers =  ({ data }: { data: any }) => {
         ))}
       </tbody>
     </table>
-  )
-}
+  );
+};
 
-export default GeneralAnswers
+export default GeneralAnswers;
