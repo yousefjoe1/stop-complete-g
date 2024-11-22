@@ -95,13 +95,14 @@ const Home = () => {
         dir="rtl"
         className="min-h-screen lg:pt-10 pt-2 container mx-auto lg:px-0 px-5 pb-10"
       >
-        <h1 className="lg:text-3xl font-bold lg:my-10 my-4 text-center">مرحبا بك 👋</h1>
-
         <MyName />
+
+        <h1 className="lg:text-3xl font-bold lg:my-10 mb-4 text-center">مرحبا بك 👋</h1>
+
 
         <Link to={`/all-info`} className="buttons">
           <button className="blob-btn">
-            الصحابة
+            معلومات تثقيفية
             👆 
             <span className="blob-btn__inner">
               <span className="blob-btn__blobs">
@@ -133,6 +134,33 @@ const Home = () => {
               </filter>
             </defs>
           </svg>
+
+          <Collapse
+          className="mt-5 w-fit"
+          size="small"
+          items={[
+            {
+              key: "1",
+              label: <p className="font-bold text-xl"> ازاي نلعب</p>,
+              children: (
+                <>
+                  <ul className="px-3 text-xl">
+                    <li>سجل الاول</li>
+                    <li>اعمل مجموعة</li>
+                    <li>ادخل المجموعة وانسخ العنوان الموجود</li>
+                    <li>
+                      ابعته لاصحابك عن طريق الواتس او اي حاجه بتتكلموا عليها
+                    </li>
+                    <li>☝️ أو ممكن</li>
+                    <li className="font-bold">
+                      بعد ما تسجل اي حد يبعتلك لينك المجموعه اللي هو عاملها
+                    </li>
+                  </ul>
+                </>
+              ),
+            },
+          ]}
+        />
 
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -181,32 +209,7 @@ const Home = () => {
           </form>
         </motion.div>
 
-        <Collapse
-          className="mt-10 w-fit"
-          size="small"
-          items={[
-            {
-              key: "1",
-              label: <p className="font-bold text-xl"> ازاي نلعب</p>,
-              children: (
-                <>
-                  <ul className="px-3 text-xl">
-                    <li>سجل الاول</li>
-                    <li>اعمل مجموعة</li>
-                    <li>ادخل المجموعة وانسخ العنوان الموجود</li>
-                    <li>
-                      ابعته لاصحابك عن طريق الواتس او اي حاجه بتتكلموا عليها
-                    </li>
-                    <li>☝️ أو ممكن</li>
-                    <li className="font-bold">
-                      بعد ما تسجل اي حد يبعتلك لينك المجموعه اللي هو عاملها
-                    </li>
-                  </ul>
-                </>
-              ),
-            },
-          ]}
-        />
+
 
         <h3 className="lg:pt-10 pt-4 pb-3 lg:text-lg font-bold">مجموعاتك</h3>
         {isLoading || isRefetching ? (

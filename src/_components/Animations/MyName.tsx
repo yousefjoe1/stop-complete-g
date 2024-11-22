@@ -1,6 +1,6 @@
 const MyName = () => {
   return (
-    <div className="mb-10 my-name flex justify-center flex-col items-center gap-5">
+    <div className="mb-5 my-name flex justify-center flex-col items-center gap-5">
       <h2 className="text-lg">I Am </h2>
       <svg
         width="276"
