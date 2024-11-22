@@ -13,19 +13,19 @@ export const logedItems = [
       ),
       key: "0",
     },
-    {
-      label: (
-        <Link
-        title="all-info"
+    // {
+    //   label: (
+    //     <Link
+    //     title="all-info"
 
-          to="/all-info"
-          className="block px-4 py-2 text-sm text-gray-700 hover:text-indigo-600"
-        >
-          نراجع مع بعض
-        </Link>
-      ),
-      key: "1",
-    },
+    //       to="/all-info"
+    //       className="block px-4 py-2 text-sm text-gray-700 hover:text-indigo-600"
+    //     >
+    //       نراجع مع بعض
+    //     </Link>
+    //   ),
+    //   key: "1",
+    // },
   ];
   
  export const notLogedItems = [
