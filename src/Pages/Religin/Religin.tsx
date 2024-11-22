@@ -8,86 +8,84 @@ import { useRef, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../_functions/getData";
 import useFetch from "../../_hooks/useFetch";
-import { arabicAlphabet, inputStyle, questoins } from "../GameGroup/GameData";
+import { arabicAlphabet, inputStyle, religinQuestoins, } from "../GameGroup/GameData";
 import AnswersTable from "../GameGroup/AnswersTable";
 
-
 const Religin = () => {
-    const { Option } = Select;
-    const [isSubmit, setIsSubmit] = useState(false);
-    const character = useRef<string | undefined>();
-  
-    const searchParams = new URLSearchParams(window.location.search);
-    const grRef = searchParams.get("g");
-  
-    const { data, refetch, isLoading, isRefetching } = useFetch(
-      `answers/${grRef}`,
-      `answers-by-group-${grRef}`,
-      true,
-      "",
-      100000
-    );
-  
-    console.log(data);
-  
-    const [messageApi, contextHolder] = message.useMessage();
-    const notify = (
-      type: "error" | "success" | "info" | "warning" | "loading" = "success",
-      txt: string
-    ) => {
-      messageApi.open({
-        type: type,
-        content: `${txt}`,
-        className: "custom-class",
-        style: {
-          marginTop: "20vh",
-        },
-      });
+  const [messageApi, contextHolder] = message.useMessage();
+  const { Option } = Select;
+  const [isSubmit, setIsSubmit] = useState(false);
+  const character = useRef<string | undefined>();
+
+  const searchParams = new URLSearchParams(window.location.search);
+  const grRef = searchParams.get("g");
+
+  const { data, refetch, isLoading, isRefetching } = useFetch(
+    `answers/${grRef}?type=religin`,
+    `answers-by-group-${grRef}-religin`,
+    true,
+    "",
+    100000
+  );
+
+  console.log("🚀 ~ Religin ~ data:", data);
+
+  const notify = (
+    type: "error" | "success" | "info" | "warning" | "loading" = "success",
+    txt: string
+  ) => {
+    messageApi.open({
+      type: type,
+      content: `${txt}`,
+      className: "custom-class",
+      style: {
+        marginTop: "20vh",
+      },
+    });
+  };
+
+  const handleCopy = async (txtlink: string) => {
+    try {
+      await navigator.clipboard.writeText(txtlink);
+      notify("success", `تم نسخ اللينك`);
+    } catch (error) {
+      console.error("Error copying text:", error);
+    }
+  };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Answers>();
+
+  const onSubmit: SubmitHandler<Answers> = async (data) => {
+    if (character.current == undefined || character.current == "") {
+      notify("error", `اختر حرف اولا`);
+      return;
+    }
+    let answers = data;
+    const d = { religin: answers, group: grRef, character: character.current };
+    let h = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("playerToken")}`,
+      },
     };
-  
-    const handleCopy = async (txtlink: string) => {
-      try {
-        await navigator.clipboard.writeText(txtlink);
-        // msgFunc("تم نسخ اللينك");
-        notify("success", `تم نسخ اللينك`);
-      } catch (error) {
-        console.error("Error copying text:", error);
-      }
-    };
-    const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-    } = useForm<Answers>();
-  
-    const onSubmit: SubmitHandler<Answers> = async (data) => {
-      if (character.current == undefined || character.current == '') {
-        notify("error", `اختر حرف اولا`);
-        return;
-      }
-      let answers = data
-      const d = {religin: answers, group: grRef, character: character.current };
-      let h = {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("playerToken")}`,
-        },
-      };
-  
-      let url = `${baseUrl}/api/answers`;
-      setIsSubmit(true);
-      let resp = await axios.post(url, d, h);
-      refetch();
-      notify("success", `${resp.data.msg} -- تمت الاجابة `);
-      character.current = "";
-      setIsSubmit(false);
-      reset();
-    };
-  
-    const onGenderChange = (value: string | undefined) => {
-      character.current = value;
-    };
-  
+
+    let url = `${baseUrl}/api/answers`;
+    setIsSubmit(true);
+    let resp = await axios.post(url, d, h);
+    refetch();
+    notify("success", `${resp.data.msg} -- تمت الاجابة `);
+    character.current = "";
+    setIsSubmit(false);
+    reset();
+  };
+
+  const onGenderChange = (value: string | undefined) => {
+    character.current = value;
+  };
+
   return (
     <>
       {contextHolder}
@@ -116,7 +114,7 @@ const Religin = () => {
           ))}
         </Select>
         <div className="grid gap-4 lg:grid-cols-3 grid-cols-2">
-          {questoins.map(({ id, label }) => (
+          {religinQuestoins.map(({ id, label }) => (
             <div key={id}>
               <label htmlFor={id} className="sr-only">
                 {label}
@@ -171,7 +169,7 @@ const Religin = () => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Religin
+export default Religin;

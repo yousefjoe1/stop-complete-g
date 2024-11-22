@@ -1,7 +1,7 @@
 import { Button, Select, Typography, message } from "antd";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Answers } from "../../types/d";
-import { arabicAlphabet, inputStyle, questoins } from "./GameData";
+import { arabicAlphabet, inputStyle, religinQuestoins } from "./GameData";
 
 import { motion } from "framer-motion";
 import { useRef, useState } from "react";
@@ -114,7 +114,7 @@ const GameGroup = () => {
           ))}
         </Select>
         <div className="grid gap-4 lg:grid-cols-3 grid-cols-2">
-          {questoins.map(({ id, label }) => (
+          {religinQuestoins.map(({ id, label }) => (
             <div key={id}>
               <label htmlFor={id} className="sr-only">
                 {label}

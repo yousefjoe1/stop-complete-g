@@ -1,4 +1,13 @@
-export const questoins  = [
+export const generalQuestions  = [
+    // { id: "character", label: "الحرف" },
+    { id: "boy", label: "ولد" },
+    { id: "girl", label: "بنت" },
+    { id: "solid", label: "جماد" },
+    { id: "animal", label: "حيوان" },
+    { id: "planet", label: "نبات" },
+    { id: "country", label: "بلاد" },
+]
+export const religinQuestoins  = [
     // { id: "character", label: "الحرف" },
     { id: "prophet", label: "اسم نبي" },
     { id: "companionMale", label: "اسم صحابي" },
