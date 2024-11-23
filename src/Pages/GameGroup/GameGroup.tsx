@@ -17,6 +17,7 @@ const GameGroup = () => {
   const character = useRef<string | undefined>();
 
   const searchParams = new URLSearchParams(window.location.search);
+  console.log("🚀 ~ GameGroup ~ searchParams: ", searchParams)
   const grRef = searchParams.get("g");
 
   const { data, refetch, isLoading, isRefetching } = useFetch(
@@ -26,8 +27,8 @@ const GameGroup = () => {
     "",
     100000
   );
+  console.log("🚀 ~ GameGroup ~ data:", data)
 
-  console.log(data);
 
   const [messageApi, contextHolder] = message.useMessage();
   const notify = (

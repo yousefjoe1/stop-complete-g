@@ -10,7 +10,6 @@ import { baseUrl } from "../../_functions/getData";
 import useFetch from "../../_hooks/useFetch";
 import { arabicAlphabet, generalQuestions, inputStyle } from "../GameGroup/GameData";
 import GeneralAnswers from "./components/GeneralAnswers";
-
 const General = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const { Option } = Select;
@@ -18,6 +17,7 @@ const General = () => {
   const character = useRef<string | undefined>();
 
   const searchParams = new URLSearchParams(window.location.search);
+
   const grRef = searchParams.get("g");
 
   const { data, refetch, isLoading, isRefetching } = useFetch(
@@ -91,7 +91,7 @@ const General = () => {
       {contextHolder}
 
       <Button
-        onClick={() => handleCopy(`http://localhost:5173/group?g=${grRef}`)}
+        onClick={() => handleCopy(`https://stop-complete-g.vercel.app/general?g=${grRef}`)}
         type="primary"
       >
         اضغط لنسخ اللينك , ويمكنك ان ترسلة لاصدقائك

@@ -92,7 +92,7 @@ const Religin = () => {
       {contextHolder}
 
       <Button
-        onClick={() => handleCopy(`http://localhost:5173/group?g=${grRef}`)}
+        onClick={() => handleCopy(`https://stop-complete-g.vercel.app/rilgin?g=${grRef}`)}
         type="primary"
       >
         اضغط لنسخ اللينك , ويمكنك ان ترسلة لاصدقائك
