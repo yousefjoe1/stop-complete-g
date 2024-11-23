@@ -131,7 +131,7 @@
 /* HTML: <div class="loader"></div> */
 .loader-get {
   display: inline-grid;
-  width: 80px;
+  width: 60px;
   aspect-ratio: 1;
   border-radius: 50%;
   overflow: hidden;
