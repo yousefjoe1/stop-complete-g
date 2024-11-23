@@ -91,7 +91,7 @@ const GameGroup = () => {
       {contextHolder}
 
       <Button
-        onClick={() => handleCopy(`http://localhost:5173/group?g=${grRef}`)}
+        onClick={() => handleCopy(`https://stop-complete-g.vercel.app/group?g=${grRef}`)}
         type="primary"
       >
         اضغط لنسخ اللينك , ويمكنك ان ترسلة لاصدقائك
