@@ -14,6 +14,9 @@ import { homeRoutes } from "./_routes/HomeRoutes.tsx";
 import NotFound from "./_components/NotFound.tsx";
 import MyContextProvider from "./_context/conexts.tsx";
 
+import { registerSW  } from 'virtual:pwa-register'
+registerSW({ immediate: true })
+
 const router = createBrowserRouter([
   {
     path: "/",
