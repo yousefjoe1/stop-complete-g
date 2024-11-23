@@ -7,8 +7,8 @@ let myconfig :any = {
   includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
   manifest: {
     name: 'Stop Complete',
-    short_name: 'I Am Finished',
-    description: 'Shop app - categories - cloths - shoess - shirts',
+    short_name: 'Stop Complete',
+    description: 'Stop Complete game',
     theme_color: '#ffffff',
     icons: [
       {
