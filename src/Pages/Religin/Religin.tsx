@@ -3,13 +3,17 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Answers } from "../../types/d";
 
 import { motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import axios from "axios";
 import { baseUrl } from "../../_functions/getData";
-import useFetch from "../../_hooks/useFetch";
 import { arabicAlphabet, inputStyle, religinQuestoins, } from "../GameGroup/GameData";
 import AnswersTable from "../GameGroup/AnswersTable";
+import { io } from "socket.io-client";
+const socket = io(baseUrl, {
+  transports: ["websocket", "polling"],
+  withCredentials: true,
+});
 
 const Religin = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -20,15 +24,30 @@ const Religin = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const grRef = searchParams.get("g");
 
-  const { data, refetch, isLoading, isRefetching } = useFetch(
-    `answers/${grRef}?type=religin`,
-    `answers-by-group-${grRef}-religin`,
-    true,
-    "",
-    100000
-  );
+  const [serverResponse, setServerResponse] = useState([]);
+  useEffect(() => {
+    socket.emit("getanswers", grRef);
 
-  console.log("🚀 ~ Religin ~ data:", data);
+    // Listen for the 'getanswers' response from the server
+    socket.on("getanswers", (allAns) => {
+      // You can also update the state with the answers if needed
+      setServerResponse(allAns);
+    });
+
+    // Listen for 'answerSaved' event from the server
+    socket.on("answerSaved", () => {
+      notify("success", `اجابة جديده `);
+      // setServerResponse((p) => msg);
+      socket.emit("getanswers", grRef);
+    });
+
+    // Cleanup event listeners on component unmount
+    return () => {
+      socket.off("getanswers");
+      socket.off("answerSaved");
+    };
+  }, [socket]);
+
 
   const notify = (
     type: "error" | "success" | "info" | "warning" | "loading" = "success",
@@ -76,8 +95,7 @@ const Religin = () => {
     let url = `${baseUrl}/api/answers`;
     setIsSubmit(true);
     let resp = await axios.post(url, d, h);
-    refetch();
-    notify("success", `${resp.data.msg} -- تمت الاجابة `);
+    console.log("🚀 ~ constonSubmit:SubmitHandler<Answers>= ~ resp:", resp)
     character.current = "";
     setIsSubmit(false);
     reset();
@@ -160,15 +178,10 @@ const Religin = () => {
           {isSubmit ? <div className="loader"></div> : <span>خلصت</span>}
         </motion.button>
       </form>
-      {isLoading || isRefetching ? (
-        <div className="w-11/12 mx-auto mt-10 ">
-          <div className="loader-get" />
-        </div>
-      ) : (
+
         <div className="overflow-x-auto">
-          <AnswersTable data={data} />
+          <AnswersTable data={serverResponse} />
         </div>
-      )}
     </>
   );
 };

@@ -33,8 +33,6 @@ const General = () => {
 
     // Listen for the 'getanswers' response from the server
     socket.on("getanswers", (allAns) => {
-      console.log(allAns);
-      // You can also update the state with the answers if needed
       setServerResponse(allAns);
     });
 
