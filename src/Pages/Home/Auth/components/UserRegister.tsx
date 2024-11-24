@@ -65,7 +65,7 @@ const UserRegister = () => {
     <>
     {contextHolder}
       <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Welcome back
+        اعمل حساب بسهولة
       </h2>
       <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
         <div>

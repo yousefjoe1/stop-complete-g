@@ -6,6 +6,7 @@ import MyName from "../../_components/Animations/MyName";
 import GroupCard from "../../_components/Cards/GroupCard";
 import { Link } from "react-router-dom";
 import GroupForm from "./_components/GroupForm";
+import { LogIn } from "lucide-react";
 
 const Home = () => {
   const { data, refetch, isLoading, isRefetching } = useFetch(
@@ -67,11 +68,11 @@ const Home = () => {
           items={[
             {
               key: "1",
-              label: <p className="font-bold text-xl"> ازاي نلعب</p>,
+              label: <p className="font-bold text-xl"> ازاي نلعب 🎮</p>,
               children: (
                 <>
                   <ul className="px-3 text-xl">
-                    <li>سجل الاول</li>
+                    <li className="flex gap-2">سجل الاول <Link className="text-blue-400 font-semibold flex items-center gap-2" to={`/auth?mode=login`}> من هنا <LogIn /> </Link>  </li>
                     <li>اعمل مجموعة</li>
                     <li>ادخل المجموعة وانسخ العنوان الموجود</li>
                     <li>

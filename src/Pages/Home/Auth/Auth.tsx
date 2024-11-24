@@ -7,7 +7,7 @@ import UserRegister from "./components/UserRegister";
 
 const Auth = () => {
 
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
 
   // useEffect(() => {
   //   setIsLogin(!isLogin);
@@ -26,15 +26,13 @@ const Auth = () => {
         className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-2xl"
       >
         
-        {isLogin && <UserLogin />}
-        {!isLogin  && <UserRegister />}
         <div className="flex items-center justify-between">
           <div className="text-sm">
             <motion.button
               onClick={() => toggleAuthMode()}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="font-medium text-gray-600 hover:text-gray-500 transition duration-300 ease-in-out"
+              className="font-medium text-base text-gray-600 hover:text-gray-500 transition duration-300 ease-in-out"
             >
               {isLogin ? "معندكش حساب ? طب سجل من هنا"
                 : "عندك حساب? طب روح هنا"}
@@ -53,6 +51,8 @@ const Auth = () => {
             </div>
           )} */}
         </div>
+        {isLogin && <UserLogin />}
+        {!isLogin  && <UserRegister />}
       </motion.div>
     </section>
   );

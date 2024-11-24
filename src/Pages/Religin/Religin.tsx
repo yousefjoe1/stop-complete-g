@@ -83,7 +83,7 @@ const Religin = () => {
     reset();
   };
 
-  const onGenderChange = (value: string | undefined) => {
+  const onCharacterChange = (value: string | undefined) => {
     character.current = value;
   };
 
@@ -105,7 +105,7 @@ const Religin = () => {
           className="w-[120px] "
           size="large"
           placeholder="اختر الحرف"
-          onChange={onGenderChange}
+          onChange={onCharacterChange}
           allowClear
         >
           {arabicAlphabet.map((alpha) => (
