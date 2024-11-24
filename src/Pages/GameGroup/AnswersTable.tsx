@@ -40,7 +40,7 @@ const AnswersTable = ({ data }: { data: any }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.data?.map((item: Item, index: number) => (
+        {data?.map((item: Item, index: number) => (
           <tr
             key={index}
             className={`text-gray-700 ${index % 2 === 0 ? "bg-gray-50" : ""}`}
