@@ -63,7 +63,7 @@ const Home = () => {
         </svg>
 
         <Collapse
-          className="mt-5 w-fit"
+          className="mb-5 mx-auto w-fit"
           size="small"
           items={[
             {
@@ -80,7 +80,7 @@ const Home = () => {
                     </li>
                     <li>☝️ أو ممكن</li>
                     <li className="font-bold">
-                      بعد ما تسجل اي حد يبعتلك لينك المجموعه اللي هو عاملها
+                      بعد ما تسجل اي حد يبعتلك لينك المجموعه اللي هو عاملها بعد ما هو يسجل
                     </li>
                   </ul>
                 </>
