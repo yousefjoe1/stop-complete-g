@@ -83,9 +83,8 @@ const Religin = () => {
       notify("error", `اختر حرف اولا`);
       return;
     }
-    let answers = {...data,character: character.current };
-
-    const d = { religin: answers, group: grRef };
+    let answers = { ...data, character: character.current, group: grRef, answer_type: 'religin'  };
+    const d = { answers: answers };
     let h = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("playerToken")}`,

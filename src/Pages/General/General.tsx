@@ -28,11 +28,14 @@ const General = () => {
   const grRef = searchParams.get("g");
 
   const [serverResponse, setServerResponse] = useState([]);
+
+  // console.log("🚀 ~ General ~ serverResponse:", serverResponse)
   useEffect(() => {
     socket.emit("getanswers", grRef);
 
     // Listen for the 'getanswers' response from the server
     socket.on("getanswers", (allAns) => {
+      // const answers = allAns.map((el:any)=> el =  {...el.general,playerName: el.playerName})
       setServerResponse(allAns);
     });
 
@@ -84,8 +87,8 @@ const General = () => {
       notify("error", `اختر حرف اولا`);
       return;
     }
-    let answers = { ...data, character: character.current };
-    const d = { general: answers, group: grRef };
+    let answers = { ...data, character: character.current, group: grRef, answer_type: 'general'  };
+    const d = { answers: answers };
     let h = {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("playerToken")}`,

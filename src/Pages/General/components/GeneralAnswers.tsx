@@ -14,14 +14,26 @@ interface General {
 interface Item {
   general: General; // Object for general properties
   playerName: string; // Player's name
-
+  character: string;
+  boy: string;
+  girl: string;
+  solid: string;
+  animal: string;
+  planet: string;
+  country: string;
 }
 
-const GeneralAnswers = ({ data }: { data: any }) => {
+const GeneralAnswers = ({ data,admin }: { data:any,admin?:boolean }) => {
   return (
     <table className="min-w-[99%] mt-10 bg-white border border-gray-300 shadow-md rounded-lg">
       <thead>
         <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+        {
+            admin &&
+          <th className="py-3 px-6 text-center border-b border-gray-300">
+            مسح
+          </th>
+          }
           <th className="py-3 px-6 text-center border-b border-gray-300">
             اسم اللاعب
           </th>
@@ -39,34 +51,40 @@ const GeneralAnswers = ({ data }: { data: any }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((item: Item, index: number) => (
+        {data && data?.map((item: Item, index: number) => (
           <tr
             key={index}
             className={`text-gray-700 ${index % 2 === 0 ? "bg-gray-50" : ""}`}
           >
+                        {/* {
+              admin &&
+            <td className="py-3 px-6 text-center border-b border-gray-300">
+              <DeleteAnswer /> 
+            </td>
+            } */}
             <td className="py-3 px-6 text-center border-b border-gray-300">
               {item.playerName}
             </td>
-            <td className="py-3 w-[200px] px-6 text-center border-b border-gray-300">
-              {item.general.character}
+            <td className="py-3 px-6 text-center border-b border-gray-300">
+              {item.character}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.general.boy}
+              {item.boy}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.general.girl}
+              {item.girl}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.general.solid}
+              {item.solid}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.general.animal}
+              {item.animal}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.general.planet}
+              {item.planet}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.general.country}
+              {item.country}
             </td>
           </tr>
         ))}

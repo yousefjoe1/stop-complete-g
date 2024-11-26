@@ -9,6 +9,7 @@ const Auth = lazy(() => import("../Pages/Home/Auth/Auth"));
 const AllInfo = lazy(() => import("../Pages/AllInfo/AllInfo"));
 const Religin = lazy(() => import("../Pages/Religin/Religin"));
 const General = lazy(() => import("../Pages/General/General"));
+const MyAnswers = lazy(() => import("../Pages/MyAnswers/MyAnswers"));
 
 export const homeRoutes = [
   {
@@ -30,5 +31,9 @@ export const homeRoutes = [
   {
     path: "/general",
     element: withSuspense(General),
+  },
+  {
+    path: "/my-answers",
+    element: withSuspense(MyAnswers),
   },
 ];

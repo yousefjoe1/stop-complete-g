@@ -1,6 +1,6 @@
 import { religinQuestoins } from "./GameData";
 
-interface ReligIn {
+interface Item {
   playerName: string; // Player's name
   character: string; // Character name
   prophet: string; // Prophet name
@@ -10,16 +10,18 @@ interface ReligIn {
   ghazwa: string; // Ghazwa name
   ayah: string; // Ayah content
 }
-
-
-interface Item {
-  religin: ReligIn; // Object holding religious properties
-}
-const AnswersTable = ({ data }: { data: any }) => {
+const AnswersTable = ({ data ,admin}: { data: any,admin?: boolean }) => {
+  console.log("🚀 ~ AnswersTable ~ data:", data)
   return (
     <table className="min-w-[99%] mt-10 bg-white border border-gray-300 shadow-md rounded-lg">
       <thead>
         <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+          {
+            admin &&
+          <th className="py-3 px-6 text-center border-b border-gray-300">
+            مسح
+          </th>
+          }
           <th className="py-3 px-6 text-center border-b border-gray-300">
             اسم اللاعب
           </th>
@@ -40,34 +42,40 @@ const AnswersTable = ({ data }: { data: any }) => {
         </tr>
       </thead>
       <tbody>
-        {data?.map((item: Item, index: number) => (
+        {data && data?.map((item: Item, index: number) => (
           <tr
             key={index}
             className={`text-gray-700 ${index % 2 === 0 ? "bg-gray-50" : ""}`}
           >
+            {/* {
+              admin &&
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.religin.playerName}
+              <DeleteAnswer /> 
+            </td>
+            } */}
+            <td className="py-3 px-6 text-center border-b border-gray-300">
+              {item.playerName}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.religin.character}
+              {item.character}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.religin.prophet}
+              {item.prophet}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.religin.companionMale}
+              {item.companionMale}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.religin.companionFemale}
+              {item.companionFemale}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.religin.surah}
+              {item.surah}
             </td>
             <td className="py-3 px-6 text-center border-b border-gray-300">
-              {item.religin.ghazwa}
+              {item.ghazwa}
             </td>
             <td className="py-3 w-[200px] px-6 text-center border-b border-gray-300">
-              {item.religin.ayah}
+              {item.ayah}
             </td>
           </tr>
         ))}
