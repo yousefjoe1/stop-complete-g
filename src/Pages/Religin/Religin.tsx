@@ -10,6 +10,8 @@ import { baseUrl } from "../../_functions/getData";
 import { arabicAlphabet, inputStyle, religinQuestoins, } from "../GameGroup/GameData";
 import AnswersTable from "../GameGroup/AnswersTable";
 import { io } from "socket.io-client";
+import PlayersChat from "../../_components/PlayersChat/PlayersChat";
+import ContainerUp from "../../_components/ContainerUp";
 const socket = io(baseUrl, {
   transports: ["websocket", "polling"],
   withCredentials: true,
@@ -105,7 +107,7 @@ const Religin = () => {
   };
 
   return (
-    <>
+    <ContainerUp>
       {contextHolder}
 
       <Button
@@ -114,6 +116,8 @@ const Religin = () => {
       >
         اضغط لنسخ اللينك , ويمكنك ان ترسلة لاصدقائك
       </Button>
+      <PlayersChat groupId={grRef} />
+
       <form className="mt-8 space-y-2" onSubmit={handleSubmit(onSubmit)}>
         <Typography.Title className="mb-0" level={5}>
           الحروف
@@ -181,7 +185,7 @@ const Religin = () => {
         <div className="overflow-x-auto">
           <AnswersTable data={serverResponse} />
         </div>
-    </>
+    </ContainerUp>
   );
 };
 

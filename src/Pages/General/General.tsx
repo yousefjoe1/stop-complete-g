@@ -13,6 +13,7 @@ import {
   inputStyle,
 } from "../GameGroup/GameData";
 import GeneralAnswers from "./components/GeneralAnswers";
+import PlayersChat from "../../_components/PlayersChat/PlayersChat";
 
 const socket = io(baseUrl, {
   transports: ["websocket", "polling"],
@@ -27,26 +28,20 @@ const General = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const grRef = searchParams.get("g");
 
-  const [serverResponse, setServerResponse] = useState([]);
+  const [serverResponse, setServerResponse] = useState([]); 
 
-  // console.log("🚀 ~ General ~ serverResponse:", serverResponse)
   useEffect(() => {
     socket.emit("getanswers", grRef);
 
-    // Listen for the 'getanswers' response from the server
     socket.on("getanswers", (allAns) => {
-      // const answers = allAns.map((el:any)=> el =  {...el.general,playerName: el.playerName})
       setServerResponse(allAns);
     });
 
-    // Listen for 'answerSaved' event from the server
     socket.on("answerSaved", () => {
       notify("success", `اجابة جديده `);
-      // setServerResponse((p) => msg);
       socket.emit("getanswers", grRef);
     });
 
-    // Cleanup event listeners on component unmount
     return () => {
       socket.off("getanswers");
       socket.off("answerSaved");
@@ -75,6 +70,7 @@ const General = () => {
       console.error("Error copying text:", error);
     }
   };
+  
   const {
     register,
     handleSubmit,
@@ -109,7 +105,7 @@ const General = () => {
     character.current = value;
   };
   return (
-    <div>
+    <>
       <>
         {contextHolder}
 
@@ -121,6 +117,11 @@ const General = () => {
         >
           اضغط لنسخ اللينك , ويمكنك ان ترسلة لاصدقائك
         </Button>
+
+
+        {/* chat  */}
+        <PlayersChat groupId={grRef} />
+
         <form className="mt-8 space-y-2" onSubmit={handleSubmit(onSubmit)}>
           <Typography.Title className="mb-0" level={5}>
             الحروف
@@ -175,7 +176,7 @@ const General = () => {
       <div className="overflow-x-auto">
         <GeneralAnswers data={serverResponse} />
       </div>
-    </div>
+    </>
   );
 };
 
