@@ -28,6 +28,7 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
       socket.emit("join_group", groupId);
       effectRan.current = true; // Mark as executed
     }
+      console.log("🚀 ~ useEffect ~ groupId:", groupId)
   }, [groupId]);
 
   const notify = (
@@ -45,6 +46,8 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
   };
   useEffect(() => {
     socket.on("get_msg", (allMsgs) => {
+      console.log("🚀 ~ socket.on ~ allMsgs:", allMsgs)
+      
     setloading(false)
       // notify("info", "هناك رسالة");
       setServerResponse((p) => [...p, allMsgs]);
