@@ -1,7 +1,11 @@
 import React from "react";
 import ContainerUp from "../../_components/ContainerUp";
 import { Collapse, theme } from "antd";
-import { companionsData, companionsDataFemal } from "../../_constants/Sahaba";
+import {
+  companionsData,
+  companionsDataFemal,
+  phrophets,
+} from "../../_constants/Sahaba";
 
 import { CaretRightOutlined } from "@ant-design/icons";
 
@@ -17,6 +21,31 @@ const AllInfo = () => {
     <ContainerUp>
       <Collapse
         size="small"
+        className="mt-4"
+        defaultActiveKey={['1']}
+        items={[
+          {
+            key: "1",
+            label: <h1>اسماء الانبياء والرسل</h1>,
+            children: (
+              <Collapse
+                bordered={false}
+                expandIcon={({ isActive }) => (
+                  <CaretRightOutlined rotate={isActive ? 90 : 0} />
+                )}
+                style={{ background: token.colorBgContainer }}
+                defaultActiveKey={["1"]}
+                className="mt-10 w-fit"
+                size="small"
+                items={phrophets(panelStyle)}
+              />
+            ),
+          },
+        ]}
+      />
+      <Collapse
+        size="small"
+        className="mt-4"
         items={[
           {
             key: "1",
