@@ -119,7 +119,6 @@ const General = () => {
         </Button>
 
 
-        {/* chat  */}
         <PlayersChat groupId={grRef} />
 
         <form className="mt-8 space-y-2" onSubmit={handleSubmit(onSubmit)}>

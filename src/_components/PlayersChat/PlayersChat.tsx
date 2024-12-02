@@ -46,12 +46,11 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
   };
   useEffect(() => {
     socket.on("get_msg", (allMsgs) => {
-      console.log("🚀 ~ socket.on ~ allMsgs:", allMsgs)
-      
     setloading(false)
-      // notify("info", "هناك رسالة");
       setServerResponse((p) => [...p, allMsgs]);
     });
+
+
     return () => {
       socket.off("get_msg");
     };
@@ -76,7 +75,6 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
     <ContainerUp className="mt-3">
       {contextHolder}
 
-      {/* chat box */}
       <Alert
       className="w-fit"
         message={`شات مع اصحابك عشان تتفقوا علي حرف وتلعبوا ع طول`}
