@@ -66,7 +66,7 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
     setloading(true)
     socket.emit("player_msg", {
       message: playerMsg,
-      room: "6743782f3fe0d0d371f56ee7",
+      room: groupId,
       plsc: localStorage.getItem("playerToken"),
     });
     setplayerMsg('')
