@@ -15,7 +15,6 @@ const Home = () => {
     true,
     "playerToken"
   );
-  console.log("🚀 ~ Home ~ data:", data)
 
   return (
     <>
@@ -29,9 +28,10 @@ const Home = () => {
           مرحبا بك 👋
         </h1>
 
+      <div className="flex items-center gap-5">
         <Link to={`/all-info`} className="buttons">
           <button className="blob-btn">
-            معلومات تثقيفية 👆
+            معلومات دينية 👆
             <span className="blob-btn__inner">
               <span className="blob-btn__blobs">
                 <span className="blob-btn__blob"></span>
@@ -43,6 +43,23 @@ const Home = () => {
           </button>
           <br />
         </Link>
+
+        {/* <Link to={`/general-info`} className="buttons">
+          <button className="blob-btn">
+            معلومات عامة 👆
+            <span className="blob-btn__inner">
+              <span className="blob-btn__blobs">
+                <span className="blob-btn__blob"></span>
+                <span className="blob-btn__blob"></span>
+                <span className="blob-btn__blob"></span>
+                <span className="blob-btn__blob"></span>
+              </span>
+            </span>
+          </button>
+          <br />
+        </Link> */}
+
+      </div>
         <svg className="h-0" xmlns="http://www.w3.org/2000/svg" version="1.1">
           <defs>
             <filter id="goo">

@@ -72,7 +72,7 @@ const AllInfo = () => {
         items={[
           {
             key: "1",
-            label: <h1>بعض من اسماء الصحابات</h1>,
+            label: <h1>بعض من اسماء الصحابيات</h1>,
             children: (
               <Collapse
                 bordered={false}

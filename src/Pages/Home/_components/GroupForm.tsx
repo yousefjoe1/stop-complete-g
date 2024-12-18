@@ -59,17 +59,21 @@ const GroupForm = ({ refetch }: { refetch: Function }) => {
     };
     setIsSubmit(true);
 
-    let resp = await axios.post(url, userdata, h);
+    try {
+      let resp = await axios.post(url, userdata, h);
 
-    if (resp.data.code == 400 || resp.data.code != 201) {
-      msg("error", `${resp.data.msg} او هناك خطا اخر -- انت لست مسجل عندنا`);
-    }
-    if (resp.data.code == 201) {
-      msg("success", `${resp.data.msg} -- تم الاضافة `);
-      refetch();
+      if (resp.data.code == 400 || resp.data.code != 201) {
+        msg("error", `${resp.data.msg} او هناك خطا اخر -- انت لست مسجل عندنا`);
+      }
+      if (resp.data.code == 201) {
+        msg("success", `${resp.data.msg} -- تم الاضافة `);
+        refetch();
+      }
+      groupType.current = "";
+    } catch (error) {
+      msg("error", `انت لست مسجل عندنا او هناك خطا اخر`);
     }
     setIsSubmit(false);
-    groupType.current = "";
   };
 
   return (

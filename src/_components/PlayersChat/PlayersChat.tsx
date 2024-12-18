@@ -85,7 +85,7 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
           serverResponse.map((msg, indx) => (
             <div key={indx} className="shadow-lg rounded-2xl mt-2">
               <h3> {msg.player} </h3>
-              <Alert message={msg.message} type="info" />
+              <Alert message={msg.message} type="info" className="border-none" />
             </div>
           ))}
       </div>
