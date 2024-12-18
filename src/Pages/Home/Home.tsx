@@ -29,7 +29,7 @@ const Home = () => {
         </h1>
 
       <div className="flex items-center gap-5">
-        <Link to={`/all-info`} className="buttons">
+        <Link to={`/all-info`} title="religen details" className="buttons">
           <button className="blob-btn">
             معلومات دينية 👆
             <span className="blob-btn__inner">

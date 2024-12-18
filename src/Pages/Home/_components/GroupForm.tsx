@@ -93,23 +93,22 @@ const GroupForm = ({ refetch }: { refetch: Function }) => {
             </label>
             <input
               id="group-name"
-              {...register("name", { required: true })}
+              {...register("name", { required: true,maxLength: 20, minLength: 2 })}
               type="text"
               className="appearance-none rounded-md relative block w-full px-3 py-4 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm transition duration-300 ease-in-out"
               placeholder="اسم مجموعه اللعب"
             />
             {errors.name && (
-              <p className="text-red-500 text-xs mt-1">هذا الحقل مطلوب</p>
+              <p className="text-red-500 text-xs mt-1">هذا الحقل مطلوب - اكتب حرفين على الاقل</p>
             )}
           </div>
           <div className="type-select">
-            <h4>اختر النوع</h4>
+            <h2>اختر النوع</h2>
             <div className="select mt-2">
               <select onChange={(e) => (groupType.current = e.target.value)}>
                 <option value=""></option>
                 <option value="دينية">دينية</option>
                 <option value="عامة">ثقافة عامة</option>
-                {/* <option value="3">Green Tea</option> */}
               </select>
             </div>
           </div>

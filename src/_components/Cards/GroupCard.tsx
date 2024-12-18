@@ -15,7 +15,7 @@ const GroupCard = ({ group ,refetch}: { group: Group,refetch:Function }) => {
         <h3 className="lg:text-2xl"> النوع: {group.groupType} </h3>
       </div>
       <div className="flex items-start gap-3">
-        <Link to={`/${linkBasedOnType}`}>
+        <Link title="group link" to={`/${linkBasedOnType}`}>
           <button className="button-82-pushable" role="button">
             <span className="button-82-shadow"></span>
             <span className="button-82-edge"></span>

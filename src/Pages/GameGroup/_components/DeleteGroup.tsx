@@ -29,8 +29,8 @@ const DeleteGroup = ({group,refetch}: {group: string,refetch:Function}) => {
 
 
   return (
-    <div>
-      <button onClick={()=> setOpen(true)} className="bg-red-500 h-full text-white p-1 rounded-md ">
+    <>
+      <button type="button" onClick={()=> setOpen(true)} className="bg-red-500 h-full text-white p-1 rounded-md ">
         <Trash2 size={15} />
       </button>
       <Modal
@@ -44,7 +44,7 @@ const DeleteGroup = ({group,refetch}: {group: string,refetch:Function}) => {
              {isSubmit && <Spin size="small" />}
           </Button>
       </Modal>
-    </div>
+    </>
   );
 };
 
