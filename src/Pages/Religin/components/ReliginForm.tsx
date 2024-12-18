@@ -67,8 +67,7 @@ const ReliginForm = ({grRef}:{grRef:string | null}) => {
 
     let url = `${baseUrl}/api/answers`;
     setIsSubmit(true);
-    let resp = await axios.post(url, d, h);
-    console.log("🚀 ~ constonSubmit:SubmitHandler<Answers>= ~ resp:", resp);
+     await axios.post(url, d, h);
     character.current = "";
     setIsSubmit(false);
     reset();
