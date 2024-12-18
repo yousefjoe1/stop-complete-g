@@ -64,7 +64,7 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
 
   const sendMessage = async () => {
 
-    if(!localStorage.getItem('playe-rToken')){
+    if(!localStorage.getItem('playerToken')){
       notify("error", "سجل معانا او ادخل بحسابك لو عندك");
       setTimeout(() => {
         navigat('/auth')

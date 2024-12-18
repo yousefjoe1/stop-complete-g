@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { baseUrl } from "../../../_functions/getData";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface GroupInputs {
   name: string;
@@ -11,6 +12,8 @@ interface GroupInputs {
 }
 
 const GroupForm = ({ refetch }: { refetch: Function }) => {
+      const navigat = useNavigate()
+  
   const [isSubmit, setIsSubmit] = useState(false);
   const [messageApi, contextHolder] = message.useMessage();
   const msg = (
@@ -44,6 +47,9 @@ const GroupForm = ({ refetch }: { refetch: Function }) => {
 
     if (!localStorage.getItem("playerToken")) {
       msg("error", `  انت لست مسجل عندنا سجل والعب`);
+      setTimeout(() => {
+        navigat('/auth')
+      }, 1900);
       return;
     }
 

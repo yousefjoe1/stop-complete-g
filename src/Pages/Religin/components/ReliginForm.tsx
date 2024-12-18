@@ -41,7 +41,7 @@ const ReliginForm = ({grRef}:{grRef:string | null}) => {
 
   const onSubmit: SubmitHandler<Answers> = async (data) => {
     
-    if(!localStorage.getItem('playe-rToken')){
+    if(!localStorage.getItem('playerToken')){
       notify("error", "سجل معانا او ادخل بحسابك لو عندك");
       setTimeout(() => {
         navigat('/auth')
@@ -108,7 +108,7 @@ const ReliginForm = ({grRef}:{grRef:string | null}) => {
 
             <input
               id={id}
-              {...register(id as keyof Answers, { required: true })}
+              {...register(id as keyof Answers, { required: true, maxLength: 15,minLength:2 })}
               type="text"
               className={inputStyle}
               placeholder={label}
@@ -126,7 +126,7 @@ const ReliginForm = ({grRef}:{grRef:string | null}) => {
       </Typography.Title>
       <textarea
         className={`${inputStyle}`}
-        {...register(`ayah` as keyof Answers, { required: true })}
+        {...register(`ayah` as keyof Answers, { required: true,maxLength: 30 })}
         placeholder="الايه"
       />
       {errors[`ayah` as keyof Answers] && (
