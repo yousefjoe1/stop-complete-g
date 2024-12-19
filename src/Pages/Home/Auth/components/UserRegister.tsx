@@ -11,7 +11,7 @@ import { baseUrl } from "../../../../_functions/getData";
 import { message } from "antd";
 
 const UserRegister = () => {
-  const [messageApi,contextHolder] = message.useMessage();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const context = useContext(MyContext)!; // The `!` asserts that context is not undefined
   const { contextValue, setContextValue } = context;
@@ -25,6 +25,19 @@ const UserRegister = () => {
   } = useForm<Inputs>();
 
   let navigate = useNavigate();
+  const msg = (
+    type: "error" | "success" | "info" | "warning" | "loading" = "success",
+    txt: string
+  ) => {
+    messageApi.open({
+      type: type,
+      content: `${txt}`,
+      className: "custom-class",
+      style: {
+        marginTop: "20vh",
+      },
+    });
+  };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     let url = `${baseUrl}/api/users/register`;
@@ -36,26 +49,11 @@ const UserRegister = () => {
     setIsSubmit(true);
     let resp = await axios.post(url, userdata);
     if (resp.data.code == 400) {
-      // msg(resp.data.msg, "error");
+      msg(resp.data.msg, "error");
     } else {
       navigate("/");
       localStorage.setItem("playerToken", resp.data.token);
-      messageApi.open({
-        type: 'error',
-        content: resp.data.msg,
-        className: 'custom-class',
-        style: {
-          marginTop: '20vh',
-        },
-      });
-      // if (resp.data.data.role == "vendor") {
-      //   localStorage.setItem("vendorToken", resp.data.token);
-      //   navigate("/vendor");
-      // } else {
-      //   navigate("/");
-      //   localStorage.setItem("userToken", resp.data.token);
-      // }
-      // msg(resp.data.msg);
+      msg(resp.data.msg, "success");
     }
     setContextValue(!contextValue);
     setIsSubmit(false);
@@ -63,7 +61,7 @@ const UserRegister = () => {
 
   return (
     <>
-    {contextHolder}
+      {contextHolder}
       <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
         اعمل حساب بسهولة
       </h2>
@@ -73,14 +71,15 @@ const UserRegister = () => {
             Name
           </label>
           <input
+          required
             id="name"
             type="text"
-            {...register("name", { required: true })}
+            {...register("name", { required: true, minLength: 2, maxLength: 20 })}
             className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm transition duration-300 ease-in-out"
-            placeholder="Name"
+            placeholder="الاسم"
           />
           {errors.name && (
-            <p className="text-red-500 text-xs mt-1">هذا الحقل مطلوب</p>
+            <p className="text-red-500 text-xs mt-1">هذا الحقل مطلوب - لا يقل عن حرفين ولا يزيد عن عشرين</p>
           )}
         </div>
         <div>
@@ -88,11 +87,12 @@ const UserRegister = () => {
             Email address
           </label>
           <input
+            required
             id="email"
             {...register("email", { required: true })}
             type="email"
             className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm transition duration-300 ease-in-out"
-            placeholder="Email address"
+            placeholder="الايميل"
           />
           {errors.email && (
             <p className="text-red-500 text-xs mt-1">هذا الحقل مطلوب</p>
@@ -104,14 +104,15 @@ const UserRegister = () => {
             Password
           </label>
           <input
+            required
             id="password"
-            {...register("password", { required: true })}
+            {...register("password", { required: true ,minLength: 6, maxLength: 20 })}
             type="password"
             className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm transition duration-300 ease-in-out"
-            placeholder="Password"
+            placeholder="رقم المرور"
           />
           {errors.password && (
-            <p className="text-red-500 text-xs mt-1">هذا الحقل مطلوب</p>
+            <p className="text-red-500 text-xs mt-1">هذا الحقل مطلوب - لا يقل عن 6 حروف او ارقام ولا يزيد عن عشرين</p>
           )}
         </div>
 
