@@ -118,7 +118,7 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
     {
       joinedPlayers.length > 0 ?
       <>
-      <h3 className="mt-4"> الاصدقاء المتاحين </h3>
+      <h3 className="mt-4"> اللاعبين المتاحين </h3>
       <div dir="ltr" className="m-1 mb-5 overflow-y-auto lg:w-[50%] h-[180px] ">
         {
           joinedPlayers.map((pl: Player)=>(
