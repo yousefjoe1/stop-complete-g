@@ -15,6 +15,7 @@ const Home = () => {
     true,
     "playerToken"
   );
+  console.log("🚀 ~ Home ~ data:", data)
 
   return (
     <>

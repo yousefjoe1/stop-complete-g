@@ -14,7 +14,7 @@ const socket = io(baseUrl, {
 type Player = {
   _id: string;
   username: string;
-}
+};
 
 interface User {
   message: string;
@@ -22,8 +22,7 @@ interface User {
 }
 
 const PlayersChat = ({ groupId }: { groupId: string | null }) => {
-
-  const navigat = useNavigate()
+  const navigat = useNavigate();
 
   const [messageApi, contextHolder] = message.useMessage();
   const [serverResponse, setServerResponse] = useState<User[]>([]);
@@ -33,11 +32,11 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
 
   const effectRan = useRef(false);
   useEffect(() => {
-    const tok = localStorage.getItem('playerToken')
-    if(tok){
+    const tok = localStorage.getItem("playerToken");
+    if (tok) {
       if (effectRan.current) {
       } else {
-        socket.emit("join_group", {groupId: groupId,tk: tok});
+        socket.emit("join_group", { groupId: groupId, tk: tok });
         effectRan.current = true;
       }
     }
@@ -57,15 +56,15 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
     });
   };
   useEffect(() => {
-    if(localStorage.getItem('playerToken')){
+    if (localStorage.getItem("playerToken")) {
       socket.on("get_msg", (allMsgs) => {
         setloading(false);
         setServerResponse((p) => [...p, allMsgs]);
       });
 
-      socket.on('joined',(players)=>{
-        setJoinedPlayers(players)
-      })
+      socket.on("joined", (players) => {
+        setJoinedPlayers(players);
+      });
     }
 
     return () => {
@@ -82,13 +81,12 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
   // }, [socket]);
 
   const sendMessage = async () => {
-
-    if(!localStorage.getItem('playerToken')){
+    if (!localStorage.getItem("playerToken")) {
       notify("error", "سجل معانا او ادخل بحسابك لو عندك");
       setTimeout(() => {
-        navigat('/auth')
+        navigat("/auth");
       }, 1900);
-      return
+      return;
     }
 
     if (playerMsg == "") {
@@ -109,30 +107,32 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
     <ContainerUp className="mt-4">
       {contextHolder}
 
+      {/* {joinedPlayers.length > 0 ? (
+        <>
+          <h3 className="mt-4"> اللاعبين المتاحين </h3>
+          <div
+            dir="ltr"
+            className="m-1 mb-5 overflow-y-auto lg:w-[50%] h-[180px] "
+          >
+            {joinedPlayers.map((pl: Player) => (
+              <div
+                key={pl._id}
+                className="bg-blue-300/40 mt-1 rounded-2xl p-1 px-2 w-fit"
+              >
+                {pl.username}
+              </div>
+            ))}
+          </div>
+        </>
+      ) : (
+        ""
+      )} */}
+
       <Alert
         className="w-fit"
         message={`شات مع اصحابك عشان تتفقوا علي حرف وتلعبوا ع طول`}
         type="success"
       />
-
-    {
-      joinedPlayers.length > 0 ?
-      <>
-      <h3 className="mt-4"> اللاعبين المتاحين </h3>
-      <div dir="ltr" className="m-1 mb-5 overflow-y-auto lg:w-[50%] h-[180px] ">
-        {
-          joinedPlayers.map((pl: Player)=>(
-            <div key={pl._id} className="bg-blue-300/40 mt-1 rounded-2xl p-1 px-2 whitespace-nowrap">
-                {pl.username}
-            </div>
-          ))
-        }
-      </div>
-      </>
-      :
-      ''
-    }
-
       <div className="h-60 lg:w-1/2 p-1 rounded-2xl overflow-y-auto bg-blue-300/40 mt-1">
         {serverResponse &&
           serverResponse.map((msg, indx) => (
@@ -146,29 +146,34 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
             </div>
           ))}
       </div>
-      <label htmlFor="plyer-msg" className="sr-only">ارسل رسالة لاصحابك</label>
-      <input
-        value={playerMsg}
-        placeholder="ابعت رسالة لاصحابك اللي في المجموعة"
-        className={`${inputStyle} lg:w-1/2 mt-2`}
-        type="text"
-        name="player-msg"
-        onChange={(e) => setplayerMsg(e.target.value)}
-        id="player-msg"
-      />
-      <div className="flex">
-        <button
-          disabled={loading}
-          onClick={sendMessage}
-          type="button"
-          className={`group mt-2 relative ${
-            loading ? "w-[150px] " : "lg:w-1/2 w-full"
-          } flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300 ease-in-out`}
-        >
-          ارسال
-        </button>
-        {loading && <div className="loader-get" />}
-      </div>
+      <form>
+        <label htmlFor="plyer-msg" className="sr-only">
+          ارسل رسالة لاصحابك
+        </label>
+        <input
+          value={playerMsg}
+          required
+          placeholder="ابعت رسالة لاصحابك اللي في المجموعة"
+          className={`${inputStyle} lg:w-1/2 mt-2`}
+          type="text"
+          name="player-msg"
+          onChange={(e) => setplayerMsg(e.target.value)}
+          id="player-msg"
+        />
+        <div className="flex">
+          <button
+            disabled={loading}
+            onClick={sendMessage}
+            type="submit"
+            className={`group mt-2 relative ${
+              loading ? "w-[150px] " : "lg:w-1/2 w-full"
+            } flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gray-800 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition duration-300 ease-in-out`}
+          >
+            ارسال
+          </button>
+          {loading && <div className="loader-get" />}
+        </div>
+      </form>
     </ContainerUp>
   );
 };
