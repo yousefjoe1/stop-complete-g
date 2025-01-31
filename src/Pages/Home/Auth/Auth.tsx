@@ -32,7 +32,7 @@ const Auth = () => {
               onClick={() => toggleAuthMode()}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="font-medium text-base text-gray-600 hover:text-gray-500 transition duration-300 ease-in-out"
+              className="font-medium underline underline-offset-2 text-base text-blue-600 hover:text-gray-500 transition duration-300 ease-in-out"
             >
               {isLogin ? "معندكش حساب ? طب سجل من هنا"
                 : "عندك حساب? طب روح هنا"}

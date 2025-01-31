@@ -45,6 +45,18 @@ const UserLogin = () => {
           marginTop: '20vh',
         },
       });
+      if(Array.isArray(resp.data.errros)){
+        resp.data.errros.forEach((element: any) => {
+          messageApi.open({
+            type: 'error',
+            content: element.msg,
+            className: 'custom-class',
+            style: {
+              marginTop: '20vh',
+            },
+          });
+        });
+      }
     } else {
       navigate("/");
         localStorage.setItem("playerToken", resp.data.token);
@@ -103,13 +115,13 @@ const UserLogin = () => {
           </label>
           <input
             id="password"
-            {...register("password", { required: true })}
+            {...register("password", { required: true, minLength:8 })}
             type="password"
             className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 focus:z-10 sm:text-sm transition duration-300 ease-in-out"
             placeholder="Password"
           />
           {errors.password && (
-            <p className="text-red-500 text-xs mt-1">هذا الحقل مطلوب</p>
+            <p className="text-red-500 text-xs mt-1"> اكتب عدد من الحروف لا يقل عن 8 </p>
           )}
         </div>
 

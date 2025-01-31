@@ -11,11 +11,6 @@ const socket = io(baseUrl, {
   withCredentials: true,
 });
 
-type Player = {
-  _id: string;
-  username: string;
-};
-
 interface User {
   message: string;
   player: string;
@@ -26,7 +21,6 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
 
   const [messageApi, contextHolder] = message.useMessage();
   const [serverResponse, setServerResponse] = useState<User[]>([]);
-  const [joinedPlayers, setJoinedPlayers] = useState([]);
   const [playerMsg, setplayerMsg] = useState("");
   const [loading, setloading] = useState(false);
 
@@ -60,10 +54,6 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
       socket.on("get_msg", (allMsgs) => {
         setloading(false);
         setServerResponse((p) => [...p, allMsgs]);
-      });
-
-      socket.on("joined", (players) => {
-        setJoinedPlayers(players);
       });
     }
 
@@ -106,28 +96,6 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
   return (
     <ContainerUp className="mt-4">
       {contextHolder}
-
-      {/* {joinedPlayers.length > 0 ? (
-        <>
-          <h3 className="mt-4"> اللاعبين المتاحين </h3>
-          <div
-            dir="ltr"
-            className="m-1 mb-5 overflow-y-auto lg:w-[50%] h-[180px] "
-          >
-            {joinedPlayers.map((pl: Player) => (
-              <div
-                key={pl._id}
-                className="bg-blue-300/40 mt-1 rounded-2xl p-1 px-2 w-fit"
-              >
-                {pl.username}
-              </div>
-            ))}
-          </div>
-        </>
-      ) : (
-        ""
-      )} */}
-
       <Alert
         className="w-fit"
         message={`شات مع اصحابك عشان تتفقوا علي حرف وتلعبوا ع طول`}
@@ -153,7 +121,7 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
         <input
           value={playerMsg}
           required
-          placeholder="ابعت رسالة لاصحابك اللي في المجموعة"
+          placeholder="اكتب هنا ..."
           className={`${inputStyle} lg:w-1/2 mt-2`}
           type="text"
           name="player-msg"
@@ -162,6 +130,7 @@ const PlayersChat = ({ groupId }: { groupId: string | null }) => {
         />
         <div className="flex">
           <button
+          title="ارسال"
             disabled={loading}
             onClick={sendMessage}
             type="submit"

@@ -134,6 +134,7 @@ const GeneralForm = ({ grRef }: { grRef: string | null }) => {
           ))}
         </div>
         <motion.button
+        title="خلصت"
           type="submit"
           disabled={isSubmit}
           whileHover={{ scale: 1.05 }}
